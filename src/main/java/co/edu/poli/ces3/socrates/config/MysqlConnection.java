@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class MysqlConexion {
+public abstract class MysqlConnection {
 
     private String url;
     private String user;
@@ -15,7 +15,7 @@ public class MysqlConexion {
     private Connection connection;
 
 
-    public MysqlConexion(){
+    public MysqlConnection(){
         this.user = "ces3";
         this.password = "ces32025";
         this.dataBase = "socrates";
@@ -24,9 +24,11 @@ public class MysqlConexion {
         this.url = "jdbc:mysql://" + host + ":" + port + "/" + dataBase;
     }
 
+    public abstract void disconnect();
+
     public boolean connect(){
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.jdbc.Driver");
 
             connection = DriverManager.getConnection(this.url,this.user, this.password);
 
@@ -34,7 +36,7 @@ public class MysqlConexion {
 
             return true;
         } catch (ClassNotFoundException | SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Error: " + e.getMessage());
             return false;
         }
     }
