@@ -1,6 +1,7 @@
 package co.edu.poli.ces3.socrates.repositories;
 
 import co.edu.poli.ces3.socrates.config.MysqlConnection;
+import co.edu.poli.ces3.socrates.dao.User;
 import co.edu.poli.ces3.socrates.interfaces.ICrud;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public class UserRepository extends MysqlConnection implements ICrud {
     }
 
     @Override
-    public List<Object> select() {
+    public List<User> select() {
         return null;
     }
 

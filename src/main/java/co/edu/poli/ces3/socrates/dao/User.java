@@ -131,4 +131,27 @@ public class User {
     public void setDeletedAat(Date deletedAat) {
         this.deletedAat = deletedAat;
     }
+
+    @Override
+    public String toString() {
+        return "Nombre: " + this.names + ", Apellido: " + this.lastName + ", Email: " + this.email;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return this.id.equals(((User) obj).id);
+    }
+
+    public static void main(String[] args) {
+        User user1 = new User("Andres", "Berrio");
+        user1.setEmail("andres@gmail.com");
+        user1.setId(5);
+
+        User user2 = new User("Juan Pablo", "Uribe");
+        user2.setEmail("juanpablouribe@elpoli.edu.co");
+        user2.setId(5);
+        System.out.println("***************");
+        System.out.println(user1.equals(user2));
+        System.out.println("***************");
+    }
 }

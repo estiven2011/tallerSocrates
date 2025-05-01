@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface ICrud {
     int insert();
-    List<Object> select();
+    List<?> select();
     double delete(int id);
     int update();
 }
