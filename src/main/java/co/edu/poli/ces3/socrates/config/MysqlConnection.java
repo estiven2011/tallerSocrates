@@ -18,13 +18,17 @@ public abstract class MysqlConnection {
     private Connection connection;
 
 
-    public MysqlConnection(){
+    public MysqlConnection() throws Exception{
         this.user = "ces3";
         this.password = "ces32025";
         this.dataBase = "socrates";
         this.host = "127.0.0.1";
         this.port = "3306";
         this.url = "jdbc:mysql://" + host + ":" + port + "/" + dataBase;
+
+        if(!this.connect())
+            throw new Exception("Error estableciendo la conexion");
+
     }
 
     public abstract void disconnect();
@@ -52,4 +56,11 @@ public abstract class MysqlConnection {
         return null;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
 }
