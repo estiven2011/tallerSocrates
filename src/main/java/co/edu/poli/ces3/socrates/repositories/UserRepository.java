@@ -46,7 +46,7 @@ public class UserRepository extends MysqlConnection implements ICrud {
                             rs.getString("names"),
                             rs.getString("lastName"),
                             rs.getString("password"),
-                            rs.getDate("birthday"),
+                            rs.getDate("birthdate"),
                             rs.getString("email"),
                             rs.getBoolean("is_active"),
                             rs.getString("phone"),

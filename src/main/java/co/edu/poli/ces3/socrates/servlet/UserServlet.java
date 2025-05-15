@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 @WebServlet(name = "userServlet", value = "/v2/users")
 public class UserServlet extends HttpServlet {
@@ -24,9 +25,10 @@ public class UserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         PrintWriter out = resp.getWriter();
-        JSONArray json = new JSONArray();
-        json.putAll(userService.getUsers());
-        out.print(json);
+        List list = userService.getUsers();
+        JSONArray json = new JSONArray(list);
+
+        out.print(json.toString());
 
         out.flush();
 
