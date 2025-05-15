@@ -4,9 +4,13 @@ import co.edu.poli.ces3.socrates.config.MysqlConnection;
 import co.edu.poli.ces3.socrates.dao.Course;
 import co.edu.poli.ces3.socrates.interfaces.ICrud;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class CourseRepository extends MysqlConnection implements ICrud {
+    public CourseRepository() throws Exception {
+    }
+
     @Override
     public void disconnect() {
 
@@ -18,10 +22,14 @@ public class CourseRepository extends MysqlConnection implements ICrud {
     }
 
     @Override
-    public List<Course> select() {
+    public List<?> find() throws SQLException {
         return null;
     }
 
+    @Override
+    public Object findById(int id) {
+        return null;
+    }
 
     @Override
     public double delete(int id) {

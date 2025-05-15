@@ -5,7 +5,9 @@ import java.util.List;
 
 public interface ICrud {
     int insert();
-    List<?> select() throws SQLException;
+    List<?> find() throws SQLException;
+
+    Object findById(int id);
     double delete(int id);
     int update();
 }

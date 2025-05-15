@@ -30,6 +30,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.12.1")
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
     implementation("mysql:mysql-connector-java:5.1.6")
+    implementation("org.json:json:20210307")
 }
 
 test {

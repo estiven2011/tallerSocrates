@@ -1,5 +1,8 @@
 package co.edu.poli.ces3.socrates.servlet;
 
+import co.edu.poli.ces3.socrates.services.UserService;
+import org.json.JSONArray;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,18 +13,20 @@ import java.io.PrintWriter;
 
 @WebServlet(name = "userServlet", value = "/v2/users")
 public class UserServlet extends HttpServlet {
-
+    private UserService userService;
     @Override
     public void init() throws ServletException {
         super.init();
+        userService = new UserService();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         PrintWriter out = resp.getWriter();
-
-        out.print("{\"message\": \"Hello!!!\"}");
+        JSONArray json = new JSONArray();
+        json.putAll(userService.getUsers());
+        out.print(json);
 
         out.flush();
 

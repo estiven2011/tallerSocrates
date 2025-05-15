@@ -26,7 +26,12 @@ public class UserRepository extends MysqlConnection implements ICrud {
     }
 
     @Override
-    public List<User> select() throws SQLException
+    public Object findById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<User> find() throws SQLException
     {
         PreparedStatement stm = this.getConnection()
                                     .prepareStatement("SELECT * FROM users");
@@ -71,7 +76,7 @@ public class UserRepository extends MysqlConnection implements ICrud {
         try {
             repo = new UserRepository();
 
-            for (User x: repo.select()) {
+            for (User x: repo.find()) {
                 System.out.println("***********");
                 System.out.println(
                         "Nombre:" + x.getNames()
