@@ -14,8 +14,8 @@ ext {
     junitVersion = '5.9.2'
 }
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
+sourceCompatibility = "14"
+targetCompatibility = "14"
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -31,6 +31,9 @@ dependencies {
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
     implementation("mysql:mysql-connector-java:5.1.6")
     implementation("org.json:json:20210307")
+
+    implementation 'javax.persistence:javax.persistence-api:2.2'
+
 }
 
 test {

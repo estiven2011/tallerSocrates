@@ -3,6 +3,7 @@ package co.edu.poli.ces3.socrates.services;
 import co.edu.poli.ces3.socrates.dao.User;
 import co.edu.poli.ces3.socrates.repositories.UserRepository;
 
+import java.lang.reflect.Field;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -27,6 +28,15 @@ public class UserService {
             System.out.println(e.getMessage());
         }finally {
             return listUsers;
+        }
+    }
+
+    public void upgrade(User userUpdate) {
+
+        Class<?> classUser = User.class;
+
+        for (Field field: classUser.getDeclaredFields()) {
+
         }
     }
 }

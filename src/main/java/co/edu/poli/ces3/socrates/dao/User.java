@@ -1,9 +1,15 @@
 package co.edu.poli.ces3.socrates.dao;
 
 import java.util.Date;
-
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 public class User {
+    @Column(name = "id")
     private Integer id;
+
+    @Column(name = "names")
     private String names;
     private String lastName;
     private String password;
@@ -19,6 +25,10 @@ public class User {
     public User(String names, String lastName) {
         this.names = names;
         this.lastName = lastName;
+    }
+
+    public User(){
+
     }
 
     public User(Integer id, String names, String lastName, String password, Date birthdate, String email, Boolean isActive, String phone, String gender, Date createdAt, Date updatedAt, Date deletedAat) {
