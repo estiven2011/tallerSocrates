@@ -1,10 +1,14 @@
 package co.edu.poli.ces3.socrates.config;
 
 import co.edu.poli.ces3.socrates.dao.User;
+import co.edu.poli.ces3.socrates.utils.annotations.Column;
+import co.edu.poli.ces3.socrates.utils.annotations.Table;
 
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 public abstract class MysqlConnection {
@@ -63,4 +67,48 @@ public abstract class MysqlConnection {
     public Connection getConnection() {
         return connection;
     }
+
+    public QueryResult getQueryUpdateAndParams(Object data, Class<?> clazz){
+        boolean hasFieldsToUpdate = false;
+        Table tableAnnotation = clazz.getAnnotation(Table.class);
+        LinkedList<Object> valuesFieldsToUpdate = new LinkedList<>();
+        LinkedList<Object> valuesFieldsPrimaryKey = new LinkedList<>();
+        if (tableAnnotation != null) {
+            StringBuilder sql = new StringBuilder("UPDATE " + tableAnnotation.name() + " SET ");
+            StringBuilder sqlWhere = new StringBuilder(" WHERE ");
+            try {
+                for (Field field : clazz.getDeclaredFields()) {
+                    Column column = field.getAnnotation(Column.class);
+                    field.setAccessible(true);
+                    if(column != null && field.get(data) != null) {
+                        if (!column.primaryKey()) {
+                            sql.append(column.name()).append(" = ?,");
+                            valuesFieldsToUpdate.add(field.get(data));
+                            hasFieldsToUpdate = true;
+                        } else {
+                            sqlWhere.append(field.getName()).append(" = ?,");
+                            valuesFieldsPrimaryKey.add(field.get(data));
+                        }
+                    }
+                }
+            } catch (IllegalAccessException e) {
+                System.out.println(e.getMessage());
+            }
+
+            if(hasFieldsToUpdate) {
+                sql.deleteCharAt(sql.length()-1);
+                sqlWhere.deleteCharAt(sqlWhere.length()-1);
+
+                sql.append(sqlWhere);
+
+                valuesFieldsToUpdate.addAll(valuesFieldsPrimaryKey);
+
+                return new QueryResult(sql.toString(), valuesFieldsToUpdate);
+            }
+            return null;
+        } else {
+            throw new IllegalStateException("Class " + clazz.getSimpleName() + " is missing @Table annotation");
+        }
+    }
 }
+

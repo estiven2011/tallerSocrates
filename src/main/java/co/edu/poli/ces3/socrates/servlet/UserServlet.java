@@ -4,10 +4,10 @@ import co.edu.poli.ces3.socrates.dao.User;
 import co.edu.poli.ces3.socrates.services.UserService;
 import com.google.gson.JsonObject;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -56,14 +56,12 @@ public class UserServlet extends MyServlet {
     protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         PrintWriter out = resp.getWriter();
-
         JsonObject jsonUser = getParamsFromBody(req);
 
         Class<?> classUser = User.class;
-
         Field[] fields = classUser.getDeclaredFields();
-
         User userUpdate = new User();
+
         try {
             for (Field f : fields) {
                 if(jsonUser.has(f.getName())) {
@@ -77,18 +75,17 @@ public class UserServlet extends MyServlet {
 
             userUpdate.setId(Integer.parseInt(req.getParameter("id")));
 
-            userService.upgrade(userUpdate);
+            User user = userService.upgrade(userUpdate);
 
-        }catch(Exception ex){
-            System.out.println(ex.getMessage());
+            // Cambiar JSONArray por JSONObject
+            JSONObject json = new JSONObject(user);
+
+            out.print(json.toString());
+            out.flush();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Manejo de errores
         }
-
-
-        /*User list = userService.updateUser();
-        JSONArray json = new JSONArray(list);
-
-        out.print(json);*/
-
-        out.flush();
     }
 }

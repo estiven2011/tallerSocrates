@@ -7,7 +7,8 @@ public interface ICrud {
     int insert();
     List<?> find() throws SQLException;
 
-    Object findById(int id);
     double delete(int id);
     int update();
+    Object upgrade(Object obj) throws SQLException;
+    Object findById(int id) throws SQLException;
 }

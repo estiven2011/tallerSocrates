@@ -1,26 +1,36 @@
 package co.edu.poli.ces3.socrates.dao;
 
-import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-public class User {
-    @Column(name = "id")
-    private Integer id;
+import co.edu.poli.ces3.socrates.utils.annotations.Column;
+import co.edu.poli.ces3.socrates.utils.annotations.Table;
 
+import java.util.Date;
+
+@Table(name = "users")
+public class User {
+    @Column(name = "id", primaryKey = true)
+    private Integer id;
     @Column(name = "names")
     private String names;
+    @Column(name = "lastName")
     private String lastName;
+    @Column(name = "password")
     private String password;
+    @Column(name = "birthdate")
     private Date birthdate;
+    @Column(name = "email")
     private String email;
+    @Column(name = "is_active")
     private Boolean isActive;
+    @Column(name = "phone")
     private String phone;
+    @Column(name = "gender")
     private String gender;
+    @Column(name = "created_at")
     private Date createdAt;
+    @Column(name = "updated_at")
     private Date updatedAt;
-    private Date deletedAat;
+    @Column(name = "deleted_at")
+    private Date deletedAt;
 
     public User(String names, String lastName) {
         this.names = names;
@@ -31,7 +41,7 @@ public class User {
 
     }
 
-    public User(Integer id, String names, String lastName, String password, Date birthdate, String email, Boolean isActive, String phone, String gender, Date createdAt, Date updatedAt, Date deletedAat) {
+    public User(Integer id, String names, String lastName, String password, Date birthdate, String email, Boolean isActive, String phone, String gender, Date createdAt, Date updatedAt, Date deletedAt) {
         this.id = id;
         this.names = names;
         this.lastName = lastName;
@@ -43,7 +53,7 @@ public class User {
         this.gender = gender;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.deletedAat = deletedAat;
+        this.deletedAt = deletedAt;
     }
 
     public Integer getId() {
@@ -134,12 +144,12 @@ public class User {
         this.updatedAt = updatedAt;
     }
 
-    public Date getDeletedAat() {
-        return deletedAat;
+    public Date getDeletedAt() {
+        return deletedAt;
     }
 
-    public void setDeletedAat(Date deletedAat) {
-        this.deletedAat = deletedAat;
+    public void setDeletedAat(Date deletedAt) {
+        this.deletedAt = deletedAt;
     }
 
     @Override
@@ -152,16 +162,4 @@ public class User {
         return this.id.equals(((User) obj).id);
     }
 
-    public static void main(String[] args) {
-        User user1 = new User("Andres", "Berrio");
-        user1.setEmail("andres@gmail.com");
-        user1.setId(5);
-
-        User user2 = new User("Juan Pablo", "Uribe");
-        user2.setEmail("juanpablouribe@elpoli.edu.co");
-        user2.setId(5);
-        System.out.println("***************");
-        System.out.println(user1.equals(user2));
-        System.out.println("***************");
-    }
 }

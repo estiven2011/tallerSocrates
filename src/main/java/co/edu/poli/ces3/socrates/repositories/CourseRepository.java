@@ -40,4 +40,9 @@ public class CourseRepository extends MysqlConnection implements ICrud {
     public int update() {
         return 0;
     }
+
+    @Override
+    public Object upgrade(Object obj) {
+        return null;
+    }
 }

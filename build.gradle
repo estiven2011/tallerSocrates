@@ -32,8 +32,6 @@ dependencies {
     implementation("mysql:mysql-connector-java:5.1.6")
     implementation("org.json:json:20210307")
 
-    implementation 'javax.persistence:javax.persistence-api:2.2'
-
 }
 
 test {

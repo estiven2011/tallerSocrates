@@ -2,9 +2,12 @@ package co.edu.poli.ces3.socrates.services;
 
 import co.edu.poli.ces3.socrates.dao.User;
 import co.edu.poli.ces3.socrates.repositories.UserRepository;
+import co.edu.poli.ces3.socrates.utils.annotations.Column;
+import co.edu.poli.ces3.socrates.utils.annotations.Table;
 
 import java.lang.reflect.Field;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 public class UserService {
@@ -31,12 +34,11 @@ public class UserService {
         }
     }
 
-    public void upgrade(User userUpdate) {
-
-        Class<?> classUser = User.class;
-
-        for (Field field: classUser.getDeclaredFields()) {
-
+    public User upgrade(User userUpdate) {
+        try {
+            return (User)repository.upgrade(userUpdate);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

@@ -1,6 +1,7 @@
 package co.edu.poli.ces3.socrates.repositories;
 
 import co.edu.poli.ces3.socrates.config.MysqlConnection;
+import co.edu.poli.ces3.socrates.config.QueryResult;
 import co.edu.poli.ces3.socrates.dao.User;
 import co.edu.poli.ces3.socrates.interfaces.ICrud;
 
@@ -26,7 +27,28 @@ public class UserRepository extends MysqlConnection implements ICrud {
     }
 
     @Override
-    public Object findById(int id) {
+    public Object findById(int id) throws SQLException {
+        PreparedStatement stm = this.getConnection()
+                .prepareStatement("SELECT * FROM users WHERE id = ?");
+        stm.setInt(1, id);
+        ResultSet rs = stm.executeQuery();
+
+        if(rs.next()){
+            return new User(
+                            rs.getInt("id"),
+                            rs.getString("names"),
+                            rs.getString("lastName"),
+                            rs.getString("password"),
+                            rs.getDate("birthdate"),
+                            rs.getString("email"),
+                            rs.getBoolean("is_active"),
+                            rs.getString("phone"),
+                            rs.getString("gender"),
+                            rs.getDate("created_at"),
+                            rs.getDate("updated_at"),
+                            rs.getDate("deleted_at")
+                    );
+        }
         return null;
     }
 
@@ -69,6 +91,25 @@ public class UserRepository extends MysqlConnection implements ICrud {
     @Override
     public int update() {
         return 0;
+    }
+
+    @Override
+    public Object upgrade(Object userUpdate) throws SQLException {
+        QueryResult queryResult = getQueryUpdateAndParams(userUpdate, User.class);
+
+        if(queryResult != null){
+            PreparedStatement stm = this.getConnection()
+                    .prepareStatement(queryResult.getSql());
+            int i = 1;
+            for(Object value: queryResult.getParameters()){
+                stm.setObject(i++,value);
+            }
+
+            if(stm.executeUpdate() > 0){
+                return this.findById(((User)userUpdate).getId());
+            }
+        }
+        return null;
     }
 
     public static void main(String[] args) {
