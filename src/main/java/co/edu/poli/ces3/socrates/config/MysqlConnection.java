@@ -68,6 +68,11 @@ public abstract class MysqlConnection {
         return connection;
     }
 
+    /**
+     * sql: UPDATE nombre_tabla SET campo1 = ?, campo2 = ?, campo3 = ?, campoN = ? WHERE id = ?
+     *
+     * params: [valor1, valor2, valor3, valorN, valorId]
+     */
     public QueryResult getQueryUpdateAndParams(Object data, Class<?> clazz){
         boolean hasFieldsToUpdate = false;
         Table tableAnnotation = clazz.getAnnotation(Table.class);
@@ -86,7 +91,7 @@ public abstract class MysqlConnection {
                             valuesFieldsToUpdate.add(field.get(data));
                             hasFieldsToUpdate = true;
                         } else {
-                            sqlWhere.append(field.getName()).append(" = ?,");
+                            sqlWhere.append(column.name()).append(" = ? AND ");
                             valuesFieldsPrimaryKey.add(field.get(data));
                         }
                     }
@@ -97,7 +102,7 @@ public abstract class MysqlConnection {
 
             if(hasFieldsToUpdate) {
                 sql.deleteCharAt(sql.length()-1);
-                sqlWhere.deleteCharAt(sqlWhere.length()-1);
+                sqlWhere.delete(sqlWhere.length()-5, sqlWhere.length());
 
                 sql.append(sqlWhere);
 
