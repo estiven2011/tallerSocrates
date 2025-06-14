@@ -31,7 +31,7 @@ public abstract class MysqlConnection {
         this.url = "jdbc:mysql://" + host + ":" + port + "/" + database;
 
         if(!this.connect())
-            throw new Exception("Error estableciendo la conexion");
+            throw new Exception("Error estableciendo la conexion a la base de datos");
 
     }
 
