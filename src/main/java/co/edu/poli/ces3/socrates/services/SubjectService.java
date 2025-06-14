@@ -18,4 +18,20 @@ public class SubjectService {
     public List<Subject> getAllSubjects() throws SQLException {
         return repository.findAll();
     }
+
+    public Subject getSubjectById(int id) throws SQLException {
+        return repository.findById(id);
+    }
+
+    public void createSubject(Subject subject) throws SQLException {
+        repository.insert(subject);
+    }
+
+    public boolean deleteSubject(int id) throws SQLException {
+        return repository.delete(id);
+    }
+
+    public boolean updateSubject(Subject subject) throws SQLException {
+        return repository.update(subject);
+    }
 }
